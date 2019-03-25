@@ -11,11 +11,18 @@ contract Book{
 
     struct Book{
         address owner;//书籍发布者
+        string nameWriter;//书籍名字&作者
+        string style;//书籍类型
+        string publisherPublishAge;//出版社&出版时间
+        string ISBN;//书号
+        string intro;//书籍简介
+        string cover;//图书封面
 
+        uint status;//图书状态(0：在架；1：借阅)
+        uint pages;//页数
         uint publishDate;//图书上架时间
         uint score;//图书评分
         uint comment;//图书评论个数
-        mapping(uint => BookInfo) bookInfo;//书籍相关信息
         mapping(uint => Comment) comments;//评价列表
     }
 
@@ -26,27 +33,16 @@ contract Book{
         string content; // 评论正文
     }
 
-    struct BookInfo{
-        string name;//书籍名字
-        string style;//书籍类型
-        string publisher;//出版社
-        string writer;//作者
-        string ISBN;//书号
-        string intro;//书籍简介
-        string layout;//书籍装帧
-        string cover;//图书封面
-
-        uint publishAge;//出版时间
-        uint status;//图书状态(0：在架；1：借阅)
-        uint pages;//页数
-    }
-
     Book[] books;
     mapping(address => OptBook) BooksPool;
     //发布图书成功
-    event publishBookSuccess(uint id,BookInfo bookinfo,uint publishDate);
+    event publishBookSuccess(uint id, string nameWriter, string style, string publisherPublishAge,
+        string ISBN,string intro, string cover, uint pages, uint status,
+        uint publishDate);
     //图书评价成功
     event evaluateSuccess(uint id,address addr,uint score);
+    //借书成功
+    event borrowSuccess(uint id, address addr);
     //还书成功
     event returnBookSuccess(uint id,address addr, uint status);
 
@@ -78,11 +74,17 @@ contract Book{
     }
 
     //获取书籍信息
-    function getBooksInfo(uint id) public view returns(address,uint,uint){
+    function getBookInfo(uint id) public view returns(address, string memory, string memory, string memory,string memory,string memory,string memory,
+        uint, uint, uint, uint,uint){
         require(id < books.length);
         //获取图书,载入合约
         Book storage book = books[id];
-        return (book.owner,book.publishDate,book.score);
+        return (book.owner,book.nameWriter,book.style,book.publisherPublishAge,book.ISBN,book.intro,book.cover,book.status,book.pages,book.publishDate,book.score,book.comment);
+    }
+
+    function getBookTestInfo(uint id) public view returns(string memory){
+        Book storage book = books[id];
+        return (book.publisherPublishAge);
     }
 
     //获得评价消息
@@ -103,15 +105,24 @@ contract Book{
         return false; // 尚未评价
     }
 
+    // 是否已经借阅 通过遍历实现
+    function isBorrowed(uint id) public view returns (bool) {
+        OptBook storage optBook = BooksPool[msg.sender];
+        for(uint i = 0; i < optBook.borrowedBooks.length; i++)
+            if(optBook.borrowedBooks[i] == id)
+                return true; // 已经借阅
+        return false; // 尚未借阅
+    }
+
     //发布图书
-    function publishBookInfo(string memory name, string memory style, string memory publisher,string memory writer,string memory ISBN,string memory intro,string memory layout,
-        string memory cover, uint publishAge, uint pages, uint status) public {
+    function publishBookInfo(string memory nameWriter, string memory style, string memory publisherPublishAge,string memory ISBN,string memory intro,
+        string memory cover,uint status ,uint pages) public {
         uint id = books.length;
-        BookInfo memory bookInfo = BookInfo(name,style,publisher,writer,ISBN,intro,layout,cover,publishAge,pages,status);
-        Book memory book = Book(msg.sender, now,0,0); // 评论,评分都是0
+        Book memory book = Book(msg.sender,nameWriter,style,publisherPublishAge,ISBN,intro,cover,status,pages,now,0,0);
         books.push(book);
         BooksPool[msg.sender].publishedBooks.push(id);
-        emit publishBookSuccess(id,bookInfo,book.publishDate);
+        emit publishBookSuccess(id,book.nameWriter,book.style,book.publisherPublishAge,book.ISBN,book.intro,book.cover,
+            book.pages,book.status,book.publishDate);
     }
 
     //评价图书
@@ -124,16 +135,28 @@ contract Book{
         // 记录评价
         book.score += score;
         book.comments[book.comment++] = Comment(msg.sender, now, score, content);
-
+        BooksPool[msg.sender].commentedBooks.push(id);
         emit evaluateSuccess(id, msg.sender, book.score);
     }
 
     //还书
     function returnBook(uint id, uint status) public{
         require(id < books.length);
-        BookInfo storage bookInfo = books[id].bookInfo[id];
-        bookInfo.status = status;
-        emit returnBookSuccess(id, msg.sender,bookInfo.status);
+        Book storage book = books[id];
+        book.status = status;
+        BooksPool[msg.sender].returnedBooks.push(id);
+        emit returnBookSuccess(id, msg.sender,book.status);
+    }
+
+    function borrowedBook(uint id) public{
+        require(id < books.length);
+        Book storage book = books[id];
+        require(book.owner != msg.sender && !isBorrowed(id)); // 限制条件
+
+        BooksPool[msg.sender].returnedBooks.push(id);
+
+        emit borrowSuccess(id, msg.sender);
+
     }
 
     function () external {
