@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="基于区块链的图书馆">
+    <meta name="keywords" content="区块链，图书馆">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>不好笑图书馆</title>
+    <link href="images/library.png" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/flat-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pagination.css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.raty.min.js"></script>
+    <script type="text/javascript" src="js/pagination.js"></script>
+    <script type="text/javascript" src="app/web3.min.js"></script><!--core-->
+    <script type="text/javascript" src="app/truffle-contract.js"></script><!--core-->
+    <script type="text/javascript" src="app/ipfs.js"></script><!--core-->
+</head>
+
+<style type="text/css">
+    .error {
+        font-weight: bold;
+        padding-left: 16px;
+        color: #FFC0CB;
+    }
+    .dashed_tbl {
+        width: 100%;
+        border-top: 1px dashed #333333;
+        border-left: 1px dashed #333333;
+        text-align: center;
+    }
+    .dashed_tbl td {
+        border-bottom: 1px dashed #333333;
+        border-right: 1px dashed #333333;
+    }
+    .img-cover {
+        width: 100%;
+        height: 240px;
+    }
+    .img-caption {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+
+<body>
+
+<div id="wrap">
+
+    <!--左侧菜单栏-->
+    <script type="text/javascript" src="js/nav.js"></script>
+
+    <!--右侧内容栏-->
+    <div id="rightContent">
+        <!--右侧内容栏-->
+        <div role="tabpanel" class="tab-pane">
+            <!--顶部导航-->
+            <div class="check-div">
+                <div class="col-xs-5">
+                    <button class="btn btn-green btn-xs" onclick="App.getPublishedBooks()">我发布的图书</button>
+                    <button class="btn btn-green btn-xs" onclick="App.getCommentedBooks()">我评价的图书</button>
+                    <button class="btn btn-green btn-xs" onclick="App.getBorrowedBooks()">我借阅的图书</button>
+                    <button class="btn btn-green btn-xs" onclick="App.getReturnedBooks()">我归还的图书</button>
+                </div>
+                <div class="col-xs-3">
+                    <input type="text" class="form-control input-sm" placeholder="输入关键字搜索" id="myBookSearchBtn">
+                    <button class="btn btn-default btn-xs" id="searchBtn" style="background-color: #17d0ff" onclick="keyWordSearch()">查 询</button>
+                </div>
+                <div class="col-xs-3" style="padding-right: 40px;text-align: right;">
+                    <div class="btn-group">
+                        <button class="btn btn-default btn-xs" data-toggle="dropdown" style="background-color: #17d0ff">类型<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="myBooksList" onclick="handleClick">
+                            <li><a>马列邓</a></li>
+                            <li><a>哲学、宗教</a></li>
+                            <li><a>社会科学总论</a></li>
+                            <li><a>政治、法律</a></li>
+                            <li><a>军事</a></li>
+                            <li><a>文化、科学、教育、体育</a></li>
+                            <li><a>语言、文字</a></li>
+                            <li><a>文学</a></li>
+                            <li><a>艺术</a></li>
+                            <li><a>历史、地理</a></li>
+                            <li><a>自然科学总论</a></li>
+                            <li><a>数理科学</a></li>
+                            <li><a>天文学、地球科学</a></li>
+                            <li><a>生物科学</a></li>
+                            <li><a>医药、卫生</a></li>
+                            <li><a>农业科学</a></li>
+                            <li><a>工业技术</a></li>
+                            <li><a>交通运输</a></li>
+                            <li><a>航空、航天</a></li>
+                            <li><a>环境科学、安全科学</a></li>
+                            <li><a>综合性图书</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--默认背景-->
+            <div id="bg">
+                <a href="library/bookHome.html"><img src="images/bg.jpg" style="width: 100%;"></a>
+            </div>
+
+            <!--资讯主页-->
+            <div class="data-div">
+                <div class="row" id="Viewbooks">
+                    <div class="col-sm-6 col-md-3" hidden><!--template-->
+                        <div class="thumbnail">
+                            <a href="book.html?id=10086">
+                                <div style="position: relative;">
+                                    <img id="cover" class="img-cover" src="images/suanfa.jpg" alt="资讯封面"/>
+                                    <figcaption id="nameWriter" class="img-caption">算法 & Kevin Wayne</figcaption>
+                                </div>
+                            </a>
+                            <div class="caption">
+                                <span class="label label-info">评分</span>
+                                <samp id="score">10</samp>
+                                <br/>
+                                <span class="label label-info">类型</span>
+                                <samp id="style">数理科学</samp>
+                                <br/>
+                                <span class="label label-info">出版社&出版时间</span>
+                                <samp id="publisherPublishAge">人民邮电出版社&2018</samp>
+                                <br/>
+                                <span class="label label-info">书号</span>
+                                <samp id="ISBN">978-7-115-29380-0</samp>
+                                <br/>
+                                <span class="label label-info">页数</span>
+                                <samp id="pages">636</samp>
+                                <br/>
+                                <span class="label label-info">在架状态</span>
+                                <samp id="status">在架</samp>
+                                <br/>
+                                <span class="label label-info">内容简介</span>
+                                <samp id="intro">介绍算法的红宝书</samp>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--底部分页-->
+            <footer class="footer">
+                <div id="pagination"></div>
+            </footer>
+
+            <!--评分-->
+            <div class="modal fade" id="modal" role="dialog" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">(>﹏<)</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form class="form-horizontal" id="starForm">
+                                    <div class="form-group">
+                                        <label for="bookstar" class="col-xs-4 control-label">打分</label>
+                                        <div class="col-xs-8">
+                                            <div name="bookstar" id="bookstar"></div>
+                                            <span id="hint"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="content" class="col-xs-4 control-label">留言</label>
+                                        <div class="col-xs-8">
+                                            <textarea rows="3" name="content" id="content"
+                                                      class="form-control input-sm duiqi"></textarea>
+                                            <span class="error"></span> <!-- error字数限制 -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-xs btn-default" data-dismiss="modal">取 消</button>
+                            <button class="btn btn-xs btn-danger" onclick="App.evaluate()" id="starBtn">确 认</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div><!--右侧内容栏-->
+</div><!--右侧内容栏-->
+</div>
+<script type="text/javascript" src="app/myBook.js"></script><!--core-->
+</body>
+</html>

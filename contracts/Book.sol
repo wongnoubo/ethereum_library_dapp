@@ -18,7 +18,7 @@ contract Book{
         string intro;//书籍简介
         string cover;//图书封面
 
-        uint status;//图书状态(0：在架；1：借阅)
+        string status;//图书状态(0：在架；1：借阅)
         uint pages;//页数
         uint publishDate;//图书上架时间
         uint score;//图书评分
@@ -37,21 +37,21 @@ contract Book{
     mapping(address => OptBook) BooksPool;
     //发布图书成功
     event publishBookSuccess(uint id, string nameWriter, string style, string publisherPublishAge,
-        string ISBN,string intro, string cover, uint pages, uint status,
+        string ISBN,string intro, string cover, uint pages, string status,
         uint publishDate);
     //图书评价成功
     event evaluateSuccess(uint id,address addr,uint score);
     //借书成功
     event borrowSuccess(uint id, address addr);
     //还书成功
-    event returnBookSuccess(uint id,address addr, uint status);
+    event returnBookSuccess(uint id,address addr, string status);
 
     //获取已经被借阅的书单
     function getBorrowedBooks() public view returns (uint[] memory){
         return BooksPool[msg.sender].borrowedBooks;
     }
     //获取已经被评论过的书
-    function getCommentedBookd() public view returns(uint[] memory){
+    function getCommentedBook() public view returns(uint[] memory){
         return BooksPool[msg.sender].commentedBooks;
     }
     //获取发布的书籍
@@ -75,7 +75,7 @@ contract Book{
 
     //获取书籍信息
     function getBookInfo(uint id) public view returns(address, string memory, string memory, string memory,string memory,string memory,string memory,
-        uint, uint, uint, uint,uint){
+        string memory, uint, uint, uint,uint){
         require(id < books.length);
         //获取图书,载入合约
         Book storage book = books[id];
@@ -116,7 +116,7 @@ contract Book{
 
     //发布图书
     function publishBookInfo(string memory nameWriter, string memory style, string memory publisherPublishAge,string memory ISBN,string memory intro,
-        string memory cover,uint status ,uint pages) public {
+        string memory cover,string memory status ,uint pages) public {
         uint id = books.length;
         Book memory book = Book(msg.sender,nameWriter,style,publisherPublishAge,ISBN,intro,cover,status,pages,now,0,0);
         books.push(book);
@@ -130,7 +130,7 @@ contract Book{
         require(id < books.length);
         // 读取合约
         Book storage book = books[id];
-        require(book.owner != msg.sender && !isEvaluated(id)); // 限制条件
+        //require(book.owner != msg.sender && !isEvaluated(id)); // 限制条件
         require(0 <= score && score <= 10); // 合法条件
         // 记录评价
         book.score += score;
@@ -140,7 +140,7 @@ contract Book{
     }
 
     //还书
-    function returnBook(uint id, uint status) public{
+    function returnBook(uint id, string memory status) public{
         require(id < books.length);
         Book storage book = books[id];
         book.status = status;

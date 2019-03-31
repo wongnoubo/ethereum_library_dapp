@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="基于区块链的图书馆">
+    <meta name="keywords" content="区块链，图书馆">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>不好笑图书馆</title>
+    <link href="images/library.png" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/flat-ui.min.css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/messages_zh.min.js"></script>
+    <script type="text/javascript" src="app/web3.min.js"></script><!--core-->
+    <script type="text/javascript" src="app/truffle-contract.js"></script><!--core-->
+    <script type="text/javascript" src="app/ipfs.js"></script><!--core-->
+</head>
+
+<style type="text/css">
+    .error {
+        font-weight: bold;
+        padding-left: 16px;
+        color: #5bff12;
+    }
+</style>
+
+<body>
+<div id="wrap">
+    <!--左侧菜单栏-->
+    <script type="text/javascript" src="js/nav.js"></script>
+    <!--右侧内容栏-->
+    <div id="rightContent">
+        <!--右侧内容栏-->
+        <div role="tabpanel" class="tab-pane">
+            <!--发布任务-->
+            <div class="center-block" style="background-color: #fff;width: 600px;padding: 50px 0;margin: 50px auto;">
+                <form class="form-horizontal" id="form">
+                    <div class="form-group">
+                        <label for="nameWriter" class="col-xs-4 control-label">书名&作者: </label>
+                        <div class="col-xs-5">
+                            <input type="text" name="nameWriter" id="nameWriter" class="form-control input-sm duiqi"
+                                   style="margin-top: 7px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="style" class="col-xs-4 control-label">类型: </label>
+                        <div class="col-xs-5">
+                            <select name="style" id="style" class="form-control input-xs select-duiqi"
+                                    style="margin-top: 10px;">
+                                <option value="马列邓" style="color:#000000;">马列邓</option>
+                                <option value="哲学、宗教" style="color:#000000;">哲学、宗教</option>
+                                <option value="社会科学总论" style="color:#000000;">社会科学总论</option>
+                                <option value="政治、法律" style="color:#000000;">政治、法律</option>
+                                <option value="军事" style="color:#000000;">军事</option>
+                                <option value="文化、科学、教育、体育" style="color:#000000;">文化、科学、教育、体育</option>
+                                <option value="语言、文字" style="color:#000000;">语言、文字</option>
+                                <option value="文学" style="color:#000000;">文学</option>
+                                <option value="艺术" style="color:#000000;">艺术</option>
+                                <option value="历史、地理" style="color:#000000;">历史、地理</option>
+                                <option value="自然科学总论" style="color:#000000;">自然科学总论</option>
+                                <option value="数理科学" style="color:#000000;">数理科学</option>
+                                <option value="天文学、地球科学" style="color:#000000;">天文学、地球科学</option>
+                                <option value="生物科学" style="color:#000000;">生物科学</option>
+                                <option value="医药、卫生" style="color:#000000;">医药、卫生</option>
+                                <option value="农业科学" style="color:#000000;">农业科学</option>
+                                <option value="工业技术" style="color:#000000;">工业技术</option>
+                                <option value="交通运输" style="color:#000000;">交通运输</option>
+                                <option value="航空、航天" style="color:#000000;">航空、航天</option>
+                                <option value="环境科学、安全科学" style="color:#000000;">环境科学、安全科学</option>
+                                <option value="综合性图书" style="color:#000000;">综合性图书</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="publisherPublishAge" class="col-xs-4 control-label">出版社&出版时间: </label>
+                        <div class="col-xs-5">
+                            <input type="text" name="publisherPublishAge" id="publisherPublishAge" class="form-control input-sm duiqi"
+                                   style="margin-top: 7px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ISBN" class="col-xs-4 control-label">书号: </label>
+                        <div class="col-xs-5">
+                            <input type="text" name="ISBN" id="ISBN" class="form-control input-sm duiqi"
+                                   style="margin-top: 7px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pages" class="col-xs-4 control-label">页数: </label>
+                        <div class="col-xs-5">
+                            <input type="text" name="pages" id="pages" class="form-control input-sm duiqi"
+                                   style="margin-top: 7px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="status" class="col-xs-4 control-label">在架状态: </label>
+                        <div class="col-xs-5">
+                            <select name="status" id="status" class="form-control input-xs select-duiqi"
+                                    style="margin-top: 10px;">
+                                <option value="在架" style="color:#000000;">在架</option>
+                                <option value="离馆" style="color:#000000;">离馆</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="intro" class="col-xs-4 control-label">内容简介: </label>
+                        <div class="col-xs-5">
+                            <textarea rows="5" name="intro" id="intro" class="form-control input-sm duiqi"></textarea>
+                            <span class="error"></span> <!-- error字数限制 -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cover" class="col-xs-4 control-label">书籍封面: </label>
+                        <div class="col-xs-5">
+                            <!--upload-->
+                            <input type="file" name="cover" id="cover" accept="image/*">(jpg, png, bmp)
+                            <a id="tip_cover" target='_blank' href='https://github.com/wongnoubo'> </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-5">
+                            <button type="reset" class="btn btn-xs btn-white">取 消</button>
+                            <button type="button" class="btn btn-xs btn-green" onclick="App.publish()">发 布</button>
+                            <span id="tip"> </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> <!--右侧内容栏-->
+    </div><!--右侧内容栏-->
+</div>
+<script type="text/javascript" src="app/deployBook.js"></script><!--core-->
+</body>

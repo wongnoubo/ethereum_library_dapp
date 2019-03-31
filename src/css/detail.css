@@ -1,0 +1,99 @@
+@charset "utf-8";
+
+.panelContainer {
+    width: 1000px;
+    margin: 20px auto 0 auto;
+    position: relative;
+}
+
+/*上部分*/
+.info {
+    width: 520px;
+    top: 0;
+    left: 480px;
+    position: absolute;
+}
+
+.info p {
+    color: #666;
+    font-family: "微软雅黑";
+    font-size: 12px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    padding-left: 10px;
+}
+
+.info .name {
+    color: #000;
+    font-family: "微软雅黑";
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.info .price, .discount, .normal {
+    background: rgba(232, 232, 232, 0.5);
+}
+
+.info .price samp {
+    color: #000;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    text-decoration: line-through;
+}
+
+.info .discount samp {
+    color: #D00;
+    font-family: "微软雅黑";
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.info .normal samp {
+    color: #000;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+.info .buy {
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+.info .buy button {
+    color: #000;
+    background-color: #fff;
+    display: block;
+    border: 1px solid #ccc;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+    text-align: center;
+}
+
+#buy {
+    color: #fff;
+    background-color: #f00;
+}
+
+/*分割线*/
+.line {
+    border-bottom: 2px solid #000;
+    height: 20px;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+/*下部分*/
+.title {
+    color: #000;
+    text-decoration: underline;
+    font-family: "微软雅黑";
+    font-weight: bold;
+    font-size: 20px;
+}
