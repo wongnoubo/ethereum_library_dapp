@@ -82,11 +82,6 @@ contract Book{
         return (book.owner,book.nameWriter,book.style,book.publisherPublishAge,book.ISBN,book.intro,book.cover,book.status,book.pages,book.publishDate,book.score,book.comment);
     }
 
-    function getBookTestInfo(uint id) public view returns(string memory){
-        Book storage book = books[id];
-        return (book.publisherPublishAge);
-    }
-
     //获得评价消息
     function getCommentInfo(uint bookId,uint commentId) public view returns(
         address, uint, uint, string memory){

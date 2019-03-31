@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="基于区块链的图书馆">
+    <meta name="keywords" content="区块链，图书馆">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>不好笑图书馆</title>
+    <link href="images/library.png" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/flat-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pagination.css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.raty.min.js"></script>
+    <script type="text/javascript" src="js/pagination.js"></script>
+    <script type="text/javascript" src="app/web3.min.js"></script><!--core-->
+    <script type="text/javascript" src="app/truffle-contract.js"></script><!--core-->
+</head>
+
+<body>
+<div id="wrap">
+
+    <!--左侧菜单栏-->
+    <script type="text/javascript" src="js/nav.js"></script>
+
+    <!--右侧内容栏-->
+    <div id="rightContent">
+        <!--右侧内容栏-->
+        <div role="tabpanel" class="tab-pane">
+            <!--顶部模块-->
+            <div class="check-div">
+                书籍是人类进步的阶梯
+            </div>
+            <!--书籍主页-->
+            <!-----书籍详情上部分开始------->
+            <div class="panelContainer">
+                <img id="cover" src="images/suanfa.jpg" width="450" height="270"/>
+                <div class="info" id="bookspage">
+                    <span id="id" hidden>0</span><!--template-->
+                    <span class="name" id="nameWriter">算法 & Kevin Wayne</span>
+                    <span class="btn-primary" id="style">综合性图书</span>
+                    <p class="normal">评分：<samp id="score">10</samp></p>
+                    <p class="normal">出版社&出版时间：<samp id="publisherPublishAge">人民邮电出版社&2018</samp></p>
+                    <p class="normal">书号：<samp id="ISBN">978-7-115-29380-0</samp></p>
+                    <p class="normal">页数：<samp id="pages">520</samp></p>
+                    <p class="normal">在架状态：<samp id="status">在架</samp></p>
+                    <p class="buy" id="bottonCentent">
+                        <button id="comment" data-toggle="modal" data-target="#modal"  style="background-color: red" onclick="App.set(10086)">立即评价</button>
+                        <button onclick="window.location.href='library/booksHome.html'" style="background-color: #00bdef">返回主页</button>
+                    </p>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+            <!-----书籍详情上部分结束------->
+
+            <!--分割线-->
+            <p class="line"></p>
+
+            <!-----书籍详情下部分开始------->
+            <div class="panelContainer">
+                <p>
+                    <span class="glyphicon glyphicon-user"></span>
+                    <samp id="owner">0x413a1395f59324b7bbc5781d8dc4398dc4502790</samp>
+                <p>
+                    <span class="glyphicon glyphicon-time"></span>
+                    <samp id="date">2019-03-31</samp>
+                </p>
+
+                <p class="title" id="paneintro">书籍简介</p>
+                <p id="intro">
+                    本书系统地介绍了传统算法的实现。
+                </p>
+
+                <p class="title" id="panecomment">网友评价(<samp id="books_comments_cnt">0</samp>)</p>
+                <div id="comments">
+                    <div class="row" hidden><!--template-->
+                        <div class="col-sm-1">
+                            <img src="images/buyer.png"/>
+                            <samp>***888</samp>
+                        </div>
+                        <div class="col-sm-11">
+                            <p>2019年04月15日 00:00</p>
+                            <p name="star" data-score="5"></p>
+                            <p>这本书很不错，推荐大家阅读！</p>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            </div>
+            <!-----书籍详情下部分结束------->
+            <!--底部分页-->
+            <footer class="footer">
+                <div id="pagination"></div>
+            </footer>
+            <!--资讯评分-->
+            <div class="modal" id="modal" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">(>﹏<)</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form class="form-horizontal" id="starForm">
+                                    <div class="form-group">
+                                        <label for="star" class="col-xs-4 control-label">打分</label>
+                                        <div class="col-xs-8">
+                                            <div name="star" id="star"></div>
+                                            <span id="hint"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="content" class="col-xs-4 control-label">留言</label>
+                                        <div class="col-xs-8">
+                                            <textarea rows="3" name="content" id="content"
+                                                      class="form-control input-sm duiqi"></textarea>
+                                            <span class="error"></span> <!-- error字数限制 -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-xs btn-default" id="cancel" data-dismiss="modal">取 消</button>
+                            <button class="btn btn-xs btn-danger" onclick="App.bookevaluate()" id="starBooksBtn">确 认</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+            </div><!--右侧内容栏-->
+        </div><!--右侧内容栏-->
+    </div>
+</div>
+<script type="text/javascript" src="app/book.js"></script><!--core-->
+</body>
+</html>
