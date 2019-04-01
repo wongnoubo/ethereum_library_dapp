@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="基于区块链的购物商店">
+    <meta name="keywords" content="区块链，购物商店">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>残剑购物商店</title>
+    <link href="images/icon.png" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/flat-ui.min.css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+    a, img {
+        border: 0;
+    }
+    a {
+        text-decoration: none;
+        outline: none;
+    }
+    .clearfix:after {
+        content: " ";
+        display: block;
+        clear: both;
+        height: 0;
+        line-height: 0;
+        visibility: hidden;
+    }
+    .clearfix {
+        display: inline-block;
+    }
+    .clearfix {
+        display: block;
+    }
+    /* help */
+    .help {
+        width: 980px;
+        margin: 0 auto;
+        padding: 35px 0 40px;
+    }
+    /* f_main_nav */
+    .dc_close, .dcf_close, .dr_close, .de_close, .df_close, .dx_close, .app_close, .clear_close, .share_close {
+        background: url(../images/sprite_down.png) no-repeat 0 0;
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        text-indent: -9999em;
+        width: 30px;
+        height: 30px;
+    }
+    .dc_close {
+        background-position: -29px -130px;
+    }
+    .dcf_close {
+        background-position: -29px -130px;
+    }
+    .dr_close {
+        background-position: -149px -130px;
+    }
+    .de_close {
+        background-position: 1px -130px;
+    }
+    .df_close {
+        background-position: -59px -130px;
+    }
+    .dx_close {
+        background-position: -239px -130px;
+    }
+    .app_close {
+        background-position: -209px -130px;
+    }
+    .clear_close {
+        background-position: -89px -130px;
+    }
+    .share_close {
+        background-position: -179px -130px;
+    }
+    .f_main_nav {
+        position: relative;
+        z-index: 1;
+    }
+    .f_main_nav ul {
+        position: relative;
+        width: 980px;
+    }
+    .f_main_nav li {
+        height: 244px;
+        float: left;
+        cursor: pointer;
+        border-bottom: 8px solid #fff;
+        border-right: 8px solid #fff;
+        position: relative;
+    }
+    .f_main_nav .fm4, .f_main_nav .fm8 {
+        border-right: 0;
+    }
+    .fm1, .fm2, .fm3, .fm4, .fm5, .fm6, .fm7, .fm8 {
+        background: url(../images/sprite_feature.png) no-repeat 0 0;
+        position: relative;
+        z-index: 1;
+    }
+    .fm1 {
+        background-position: 55px 25px;
+        background-color: #5eb0de;
+        width: 244px;
+    }
+    .fm2 {
+        background-position: -200px 25px;
+        background-color: #86cad7;
+        width: 244px;
+    }
+    .fm3 {
+        background-position: -457px 25px;
+        background-color: #e9bab3;
+        width: 244px;
+    }
+    .fm4 {
+        background-position: -705px 25px;
+        background-color: #a8c194;
+        width: 224px;
+    }
+    .fm5 {
+        background-position: 55px -220px;
+        background-color: #cac69e;
+        width: 244px;
+    }
+    .fm6 {
+        background-position: -200px -220px;
+        background-color: #abc2df;
+        width: 244px;
+    }
+    .fm7 {
+        background-position: -457px -220px;
+        background-color: #bdbad7;
+        width: 244px;
+    }
+    .fm8 {
+        background-position: -705px -220px;
+        background-color: #92bccb;
+        width: 224px;
+    }
+    .f_main_nav li span {
+        display: none;
+    }
+    .fm1 span, .fm2 span, .fm3 span, .fm4 span, .fm5 span, .fm6 span, .fm7 span, .fm8 span {
+        display: block;
+        height: 8px;
+        font-size: 0;
+        line-height: 0;
+        overflow: hidden;
+        position: absolute;
+    }
+    .fm1 span {
+        background: #5eb0de;
+        top: 244px;
+        width: 244px;
+    }
+    .fm2 span {
+        background: #86cad7;
+        top: 244px;
+        width: 244px;
+    }
+    .fm3 span {
+        background: #e9bab3;
+        top: 244px;
+        width: 244px;
+    }
+    .fm4 span {
+        background: #a8c194;
+        top: 244px;
+        width: 224px;
+    }
+    .fm5 span {
+        background: #cac69e;
+        top: -8px;
+        width: 244px;
+    }
+    .fm6 span {
+        background: #abc2df;
+        top: -8px;
+        width: 244px;
+    }
+    .fm7 span {
+        background: #bdbad7;
+        top: -8px;
+        width: 244px;
+    }
+    .fm8 span {
+        background: #92bccb;
+        top: -8px;
+        width: 224px;
+    }
+    .fm_info {
+        font: 14px "Microsoft Yahei";
+        color: #fff;
+        text-align: center;
+        margin-top: 180px;
+    }
+    .f_main_con {
+        position: absolute;
+        z-index: 2;
+    }
+    .f_main_con li {
+        position: absolute;
+        width: 980px;
+        height: 244px;
+        border: 0;
+        font-family: "Microsoft Yahei";
+        color: #fff;
+    }
+    .fmc_info {
+        width: 725px;
+        margin: 45px 0 0 40px;
+    }
+    .fmc_info strong {
+        font-size: 30px;
+        font-weight: normal;
+        padding: 5px 0 15px;
+        display: block;
+    }
+    .fmc_info p {
+        font-size: 14px;
+    }
+    .fmc1, .fmc2, .fmc3, .fmc4 {
+        top: -252px;
+        display: none;
+    }
+    .fmc5, .fmc6, .fmc7, .fmc8 {
+        top: -504px;
+        display: none;
+    }
+    .fmc1 {
+        background: #5eb0de;
+    }
+    .fmc2 {
+        background: #86cad7;
+    }
+    .fmc3 {
+        background: #e9bab3;
+    }
+    .fmc4 {
+        background: #a8c194;
+    }
+    .fmc5 {
+        background: #cac69e;
+    }
+    .fmc6 {
+        background: #bdbad7;
+    }
+    .fmc7 {
+        background: #abc2df;
+    }
+    .fmc8 {
+        background: #92bccb;
+    }
+</style>
+
+<body>
+
+<div id="wrap">
+
+    <!--左侧菜单栏-->
+    <script type="text/javascript" src="js/nav.js"></script>
+
+    <!--右侧内容栏-->
+    <div id="rightContent">
+        <!--右侧内容栏-->
+        <div role="tabpanel" class="tab-pane">
+            <!--顶部模块-->
+            <div class="check-div">
+                客服邮箱：nubolei111@gmail.com
+            </div>
+
+            <!--帮助中心-->
+            <div class="help">
+                <div id="f_main_nav" class="f_main_nav">
+                    <ul class="clearfix">
+                        <li class="fm1">
+                            <p class="fm_info">怎么获得钱包</p>
+                        </li>
+                        <li class="fm2">
+                            <p class="fm_info">怎么安装ipfs</p>
+                        </li>
+                        <li class="fm3">
+                            <p class="fm_info">怎么安装truffle</p>
+                        </li>
+                        <li class="fm4">
+                            <p class="fm_info">怎么安装ganache</p>
+                        </li>
+                        <li class="fm5">
+                            <p class="fm_info">项目运行</p>
+                        </li>
+                        <li class="fm6">
+                            <p class="fm_info">参考资料</p>
+                        </li>
+                        <li class="fm7">
+                            <p class="fm_info">版本信息</p>
+                        </li>
+                        <li class="fm8">
+                            <p class="fm_info">联系作者</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="f_main_con" class="f_main_con">
+                    <ul>
+                        <li class="fmc1">
+                            <a class="dc_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>怎么获得钱包？</strong>
+                                <p>第一步，下载谷歌浏览器。<br/>第二步，下载 metamask 插件。<br/>第三步，获取钱包。<br/>第四步，保存钱包。</p>
+                            </div>
+                        </li>
+                        <li class="fmc2">
+                            <a class="dr_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>怎么安装ipfs？</strong>
+                                <p>第一步，下载：$wget https://dist.ipfs.io/go-ipfs/v0.4.13/go-ipfs_v0.4.13_linux-amd64.tar.gz<br/>第二步，解压：$tar -zxvf go-ipfs_v0.4.13_linux-amd64.tar.gz；移动：$cd go-ipfs；$sudo mv ipfs /usr/local/bin/ipfs<br/>第三步，新建节点：$ipfs init。<br/>
+                                    第四步，启动节点：$ ipfs deamon</p>
+                            </div>
+                        </li>
+                        <li class="fmc3">
+                            <a class="de_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>怎么安装truffle？</strong>
+                                <p>第一步，$sudo apt-get install nodejs<br/>第二步，$sudo apt-get install npm<br/>第三步，$sudo npm install -g truffle</p>
+                            </div>
+                        </li>
+                        <li class="fmc4">
+                            <a class="df_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>怎么安装ganache？</strong>
+                                <p>第一步，去https://truffleframework.com/ganache下载。<br/>第二步，绑定 metamask 插件助记词。<br/>第三步，启动ganache,获取10个测试地址。</p>
+                            </div>
+                        </li>
+                        <li class="fmc5">
+                            <a class="dx_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>项目怎么运行？</strong>
+                                <p>第一步，启动ipfs: ipfs daemon<br/>第二步，启动ganache:./ganache ;windows就直接双击ganahce.exe即可。<br/>第三步，编译部署：truffle compile；truffle migrate。<br/>第四步，安装项目依赖(第一次运行项目)&运行：npm install;npm run dev</p>
+                            </div>
+                        </li>
+                        <li class="fmc7">
+                            <a class="app_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>参考资料</strong>
+                                <p>游戏交易系统：https://github.com/littleredhat1997/Egame<br/>truffle官方教程宠物商店：https://truffleframework.com/tutorials/pet-shop<br/>交易商城：https://github.com/wongnoubo/Eshop<br/>代币系统：https://github.com/Firstbloodio/token</p>
+                            </div>
+                        </li>
+                        <li class="fmc6">
+                            <a class="clear_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>版本信息</strong>
+                                <p>npm:v6.9.0；<br/>truffle: v5.0.7 ganache:1.3.0<br/>metamask: 6.2.2<br/>ipfs: 0.4.19 golang:go1.11.5</p>
+                            </div>
+                        </li>
+                        <li class="fmc8">
+                            <a class="share_close" title="关闭" href="javascript:void(0);">关闭</a>
+                            <div class="fmc_info">
+                                <strong>怎么联系作者？</strong>
+                                <p>github:https://github.com/wongnoubo<br/>blog:https://blog.csdn.net/wongnoubo<br/>gmail:nubolei111@gmail.com。<br/>qq mail:1012084607@qq.com</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div><!--右侧内容栏-->
+    </div><!--右侧内容栏-->
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        // TODO
+        $("#help-menu").addClass("menu-item-active");
+        // 帮助中心
+        var f_main_nav = $("#f_main_nav");
+        var f_main_con = $("#f_main_con");
+        f_main_nav.find("li").each(function (index) {
+            $(this).click(function () {
+                if (f_main_con.find("li").eq(index).css("display") == "none") {
+                    f_main_con.find("li").fadeOut("fast").eq(index).fadeIn("fast");
+                    f_main_nav.find("span").fadeOut("fast").eq(index).fadeIn("fast");
+                } else {
+                    f_main_con.find("li").fadeOut("fast").eq(index).fadeOut("fast");
+                    f_main_nav.find("span").fadeOut("fast").eq(index).fadeOut("fast");
+                }
+            });
+        });
+        f_main_con.find("a").click(function () {
+            $(this).parent().fadeOut("fast");
+            f_main_nav.find("span").fadeOut("fast");
+        });
+    });
+</script>
+
+</body>
+</html>

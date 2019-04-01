@@ -54,12 +54,18 @@ App = {
 
     var clen = await App._getBooksCommentLength(gid);
     $("#books_comments_cnt").html(clen.toString());
+    var bookInfo =await App._getBookInfo(gid);
     var content = '';
+    var userPic = '';
     for (var i = 0; i < clen; i++) {
         var result = await App._getBookCommentInfo(gid, i);
+        if(bookInfo[0] == result[0])
+            userPic = "images/owner.png";
+        else
+            userPic = "images/buyer.png"
         content += '<div class="row">'
             + '<div class="col-sm-1">'
-            + '<img src="images/buyer.png"/>'
+            + '<img src='+ userPic +'>'
             + '<samp>***' + result[0].substr(-3) + '</samp>'
             + '</div>'
             + '<div class="col-sm-11">'

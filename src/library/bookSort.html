@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="基于区块链的图书馆">
+    <meta name="keywords" content="区块链，图书馆">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>不好笑图书馆</title>
+    <link href="images/library.png" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/flat-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pagination.css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/pagination.js"></script>
+    <script type="text/javascript" src="app/web3.min.js"></script><!--core-->
+    <script type="text/javascript" src="app/truffle-contract.js"></script><!--core-->
+</head>
+
+<body>
+
+<div id="wrap">
+
+    <!--左侧菜单栏-->
+    <script type="text/javascript" src="js/nav.js"></script>
+
+    <!--右侧内容栏-->
+    <div id="rightContent">
+        <!--右侧内容栏-->
+        <div role="tabpanel" class="tab-pane">
+            <!--顶部模块-->
+            <div class="check-div">
+                <div class="col-xs-4">
+                    <button class="btn btn-green btn-xs" id="borrowBtn" onclick="App.sortBookByBorrowNums()">借阅榜</button>
+                    <button class="btn btn-green btn-xs" id="scoreBtn" onclick="App.sortBookByComments()">评分榜</button>
+                    <button class="btn btn-green btn-xs" id="timeBtn" onclick="App.sortBookByDate()">时间榜</button>
+                </div>
+            </div>
+
+            <!--默认背景-->
+            <div id="bg">
+                <a href="library/bookHome.html"><img src="images/bg.jpg" style="width: 100%;"></a>
+            </div>
+            <!--文章列表-->
+            <div class="data-div">
+                <div class="row tableHeader">
+                    <div class="col-xs-1">排名</div>
+                    <div class="col-xs-1">书名&作者</div>
+                    <div class="col-xs-3">发布者</div>
+                    <div class="col-xs-1">发布日期</div>
+                    <div class="col-xs-1">类型</div>
+                    <div class="col-xs-2">书号</div>
+                    <div class="col-xs-1">借阅量</div>
+                    <div class="col-xs-1">评分</div>
+                    <div class="col-xs-1">封面</div>
+                </div>
+                <div class="tableBody" id="sortList">
+                    <div class="row"><!--template-->
+                        <div class="col-xs-1" id="rank">1</div>
+                        <div class="col-xs-1" id="nameWriter">算法</div>
+                        <div class="col-xs-3" id="owner">0x69ec11c61afc509aed0c9cc7f9c6bddbe738c60a</div>
+                        <div class="col-xs-1" id="date">2019-04-01</div>
+                        <div class="col-xs-1" id="style">综合性图书</div>
+                        <div class="col-xs-2" id="ISBN">978-7-121-31847-4</div>
+                        <div class="col-xs-1" id="borrowNum">100</div>
+                        <div class="col-xs-1" id="score">100</div>
+                        <div class="col-xs-1">
+                            <a href="book.html?id=10086"><img id="cover" style="width: 50px;height: 50px;" src="images/suanfa.jpg"/></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--底部分页-->
+            <footer class="footer">
+                <div id="pagination"></div>
+            </footer>
+        </div><!--右侧内容栏-->
+    </div><!--右侧内容栏-->
+
+</div>
+<script type="text/javascript" src="app/bookSort.js"></script>
+</body>
+</html>

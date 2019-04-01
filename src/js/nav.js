@@ -29,14 +29,14 @@ document.write("<!--左侧菜单栏-->\n" +
     "        </a>\n" +
     "    </div>\n" +
     "    <div class=\"menu-item\" id=\"sort-menu\" style=\"background-color:#54575e;\">\n" +
-    "        <a class=\"menu-item col-xs-offset-2\" href=\"store/productsort.html\">\n" +
+    "        <a class=\"menu-item col-xs-offset-2\" href=\"library/bookSort.html\">\n" +
     "            <span class=\"glyphicon glyphicon-list\"></span>&nbsp;&nbsp;&nbsp;图书排行\n" +
     "        </a>\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"menu-title\"><span class=\"glyphicon glyphicon-cog\"></span>&nbsp;&nbsp;&nbsp;更多</div>\n" +
     "    <div class=\"menu-item\" id=\"help-menu\" style=\"background-color:#54575e;\">\n" +
-    "        <a class=\"menu-item col-xs-offset-2\" href=\"store/help.html\">\n" +
+    "        <a class=\"menu-item col-xs-offset-2\" href=\"library/help.html\">\n" +
     "            <span class=\"glyphicon glyphicon-hand-right\"></span>&nbsp;&nbsp;&nbsp;帮助中心\n" +
     "        </a>\n" +
     "    </div>\n" +
