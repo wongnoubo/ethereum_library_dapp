@@ -39,7 +39,7 @@ contract Book{
     }
 
     Book[] books;
-    uint tempNum=0;
+    uint tempNum = 1;
     mapping(address => OptBook) BooksPool;
     //发布图书成功
     event publishBookSuccess(uint id, string nameWriter, string style, string publisherPublishAge,
@@ -123,6 +123,15 @@ contract Book{
         return false; // 尚未借阅
     }
 
+    //查看图书是否已经离馆
+    function isBookLeft(uint id) public payable returns(bool){
+        require(id < books.length);
+        Book storage book = books[id];
+        if(hashCompareInternal(book.status,"离馆"))
+            return true;//离馆
+        return false;//没有离馆
+    }
+
     //发布图书
     function publishBookInfo(string memory nameWriter, string memory style, string memory publisherPublishAge,string memory ISBN,string memory intro,
         string memory cover,string memory status ,uint pages) public {
@@ -163,10 +172,15 @@ contract Book{
         Book storage book = books[id];
         require(book.owner != msg.sender && !isBorrowed(id)); // 限制条件
         book.borrowNums[0] = BorrowNums(tempNum++);
-        BooksPool[msg.sender].returnedBooks.push(id);
-
+        BooksPool[msg.sender].borrowedBooks.push(id);
+        book.status="离馆";
         emit borrowSuccess(id, msg.sender);
 
+    }
+
+    //字符串比较
+    function hashCompareInternal(string memory a, string memory b) internal returns (bool) {
+        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
     }
 
     function () external {

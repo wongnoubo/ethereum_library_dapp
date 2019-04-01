@@ -48,7 +48,7 @@ App = {
         +'<p class="normal">借阅次数：<samp id="borrowNums">'+borrowNum+'</samp></p>'
         +'<p class="buy" id="bottonCentent">'
         +'<button id="comment"  style="background-color: red" onclick="App.set('+gid+')">立即评价</button>'
-        +'<button onclick="window.location.href=\'library/booksHome.html\'" style="background-color: #00bdef">返回主页</button>'
+        +'<button onclick="window.location.href=\'library/bookHome.html\'" style="background-color: #00bdef">返回主页</button>'
         +'</p>'
     $("#bookspage").append(buttonContent);
 

@@ -200,12 +200,15 @@ App = {
 
     borrowBooks: function(){
         book.deployed().then(function (bookInstance) {
-            bookInstance.isBorrowed.call(BorrowId).then(function (result) {
+            bookInstance.isBookLeft.call(BorrowId).then(function (result) {
                 if (result) {
+                    $("#borrowBookBtn").html('已借阅');
+                    $("#borrowBookBtn").attr("disabled", true);
                     alert("已借阅");
                     $("#modal").modal('hide');
                 } else {
-                    // call purchase
+                    $("#borrowBookBtn").html('借 阅');
+                    $("#borrowBookBtn").attr("disabled", false);
                     bookInstance.borrowedBook(BorrowId, {
                         from: web3.eth.accounts[0],
                     }).then(function (result) {
