@@ -419,26 +419,18 @@ select {
     padding-left: 30px;
 }
 
-.notice-img{
-    background: url(../images/notice.png) no-repeat center / 100%;
-    width:20px;
-    height:20px;
-    padding-left: 10px;
-    display:inline-block;
-    margin-left:7px;
-}
+/*.notice-img{*/
+    /*background: url(../images/notice.png) no-repeat center / 100%;*/
+    /*width:20px;*/
+    /*height:20px;*/
+    /*padding-left: 10px;*/
+    /*display:inline-block;*/
+    /*margin-left:7px;*/
+/*}*/
 .safe{
     line-height:70px;
     height:70px;
     padding-left: 30px;
-}
-.safe-img{
-    background: url(../images/safe.png) no-repeat center / 100%;
-    width:20px;
-    height:20px;
-    padding-left: 10px;
-    display:inline-block;
-    margin-left:7px;
 }
 
 .email-img {

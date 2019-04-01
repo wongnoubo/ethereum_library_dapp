@@ -33,8 +33,8 @@ document.write("<!--左侧菜单栏-->\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"menu-title\"><span class=\"glyphicon glyphicon-home\"></span>&nbsp;&nbsp;&nbsp;商店</div>\n" +
-    "    <div class=\"menu-item\" id=\"home-menu\" style=\"background-color:#54575e;\">\n" +
-    "        <a class=\"menu-item col-xs-offset-2\" href=\"store/home.html\">\n" +
+    "    <div class=\"menu-item\" id=\"bookHome-menu\" style=\"background-color:#54575e;\">\n" +
+    "        <a class=\"menu-item col-xs-offset-2\" href=\"library/bookHome.html\">\n" +
     "            <span class=\"glyphicon glyphicon-th-large\"></span>&nbsp;&nbsp;&nbsp;图书主页\n" +
     "        </a>\n" +
     "    </div>\n" +

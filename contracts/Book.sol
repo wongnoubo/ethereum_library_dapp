@@ -24,6 +24,7 @@ contract Book{
         uint score;//图书评分
         uint comment;//图书评论个数
         mapping(uint => Comment) comments;//评价列表
+        mapping(uint => BorrowNums) borrowNums;
     }
 
     struct Comment {
@@ -33,7 +34,12 @@ contract Book{
         string content; // 评论正文
     }
 
+    struct BorrowNums{
+        uint borrowNum;//借阅次数
+    }
+
     Book[] books;
+    uint tempNum=0;
     mapping(address => OptBook) BooksPool;
     //发布图书成功
     event publishBookSuccess(uint id, string nameWriter, string style, string publisherPublishAge,
@@ -73,13 +79,21 @@ contract Book{
         return books[id].comment;
     }
 
+    //获取借阅数据
+    function getBorrowNums(uint id) public view returns(uint){
+        Book storage book = books[id];
+        BorrowNums storage b = book.borrowNums[0];
+        return b.borrowNum;
+    }
+
     //获取书籍信息
     function getBookInfo(uint id) public view returns(address, string memory, string memory, string memory,string memory,string memory,string memory,
-        string memory, uint, uint, uint,uint){
+        string memory, uint, uint, uint, uint){
         require(id < books.length);
         //获取图书,载入合约
         Book storage book = books[id];
-        return (book.owner,book.nameWriter,book.style,book.publisherPublishAge,book.ISBN,book.intro,book.cover,book.status,book.pages,book.publishDate,book.score,book.comment);
+        return (book.owner,book.nameWriter,book.style,book.publisherPublishAge,book.ISBN,book.intro,book.cover,book.status,
+        book.pages,book.publishDate,book.score,book.comment);
     }
 
     //获得评价消息
@@ -143,11 +157,12 @@ contract Book{
         emit returnBookSuccess(id, msg.sender,book.status);
     }
 
+    //借书
     function borrowedBook(uint id) public{
         require(id < books.length);
         Book storage book = books[id];
         require(book.owner != msg.sender && !isBorrowed(id)); // 限制条件
-
+        book.borrowNums[0] = BorrowNums(tempNum++);
         BooksPool[msg.sender].returnedBooks.push(id);
 
         emit borrowSuccess(id, msg.sender);

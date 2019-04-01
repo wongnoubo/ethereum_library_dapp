@@ -3,4 +3,8 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/build/contracts/Book.json" />
+    <file url="file://$PROJECT_DIR$/build/contracts/Migrations.json" />
+  </component>
 </project>

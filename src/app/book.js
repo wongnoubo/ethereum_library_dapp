@@ -32,6 +32,7 @@ App = {
     $("#intro").html(result[5]);
     $("#date").html(fmtBookDate(result[9].toString()));
     $("#cover").attr('src', result[6]);
+    var borrowNum = await App._getBorrowedNums(gid);
 
     $("#bookspage").html('');
     var buttonContent = '';
@@ -44,6 +45,7 @@ App = {
         +'<p class="normal">书号：<samp id="ISBN">'+result[4]+'</samp></p>'
         +'<p class="normal">页数：<samp id="pages">'+result[8].toString()+'</samp></p>'
         +'<p class="normal">在架状态：<samp id="status">'+ result[7] +'</samp></p>'
+        +'<p class="normal">借阅次数：<samp id="borrowNums">'+borrowNum+'</samp></p>'
         +'<p class="buy" id="bottonCentent">'
         +'<button id="comment"  style="background-color: red" onclick="App.set('+gid+')">立即评价</button>'
         +'<button onclick="window.location.href=\'library/booksHome.html\'" style="background-color: #00bdef">返回主页</button>'
@@ -162,6 +164,18 @@ App = {
                 });
             });
         });
+    },
+
+    _getBorrowedNums: function (id) {
+        return new Promise(function (resolve,reject) {
+            book.deployed().then(function (bookInstance) {
+                bookInstance.getBorrowNums.call(id).then(function (result) {
+                    resolve(result);
+                }).catch(function (err) {
+                    alert("内部错误" + err);
+                })
+            })
+        })
     }
 }
 
