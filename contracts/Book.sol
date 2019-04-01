@@ -123,6 +123,13 @@ contract Book{
         return false; // 尚未借阅
     }
 
+    function isMyBook(uint id) public view returns(bool){
+        Book storage book = books[id];
+        if(book.owner == msg.sender)
+            return true;
+        return false;
+    }
+
     //查看图书是否已经离馆
     function isBookLeft(uint id) public payable returns(bool){
         require(id < books.length);
