@@ -50,7 +50,7 @@ contract Book{
     //借书成功
     event borrowSuccess(uint id, address addr);
     //还书成功
-    event returnBookSuccess(uint id,address addr, string status);
+    event returnBookSuccess(uint id, address addr);
 
     //获取已经被借阅的书单
     function getBorrowedBooks() public view returns (uint[] memory){
@@ -165,12 +165,13 @@ contract Book{
     }
 
     //还书
-    function returnBook(uint id, string memory status) public{
+    function returnBook(uint id) public{
         require(id < books.length);
         Book storage book = books[id];
-        book.status = status;
+        require(book.owner != msg.sender && isBorrowed(id)); // 限制条件
+        book.status = "在架";
         BooksPool[msg.sender].returnedBooks.push(id);
-        emit returnBookSuccess(id, msg.sender,book.status);
+        emit returnBookSuccess(id, msg.sender);
     }
 
     //借书

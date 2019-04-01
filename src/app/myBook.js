@@ -70,6 +70,57 @@ App = {
         $("#Viewbooks").append(content);
     },
 
+    pageCallReturnback: async function (index, jq) {
+        $("#bg").hide();
+        $("#Viewbooks").html('');
+        var pageNum = 8;
+        var start = index * pageNum; // 开始
+        var end = Math.min((index + 1) * pageNum, totalBooksNum); // 结束
+        var content = '';
+        for (var i = start; i < end; i++) {
+            var result = await App._getBookInfo(booksList[i]);
+            content += '<div class="col-sm-6 col-md-3" >'
+                + '<div class="thumbnail">'
+                + '<a href="book.html?id=' + booksList[i] + '">'
+                + '<div style="position: relative;">'
+                + '<img id="cover" class="img-cover" src="' + result[6] + '" alt="资讯封面"/>'
+                + '<figcaption id="nameWriter" class="img-caption">' + result[1] + '</figcaption>'
+                + '</div>'
+                + '</a>'
+                + '<div class="caption">'
+                +'<span class="label label-info">评分</span>'
+                +'<samp id="score">' + result[10] + '</samp>'
+                +'<br/>'
+                + '<span class="label label-info">类型</span>'
+                + '<samp id="style">' + result[2] + '</samp>'
+                + '<br/>'
+                + '<span class="label label-info">出版社&出版时间</span>'
+                + '<samp id="publisherPublishAge">' + result[3] + '</samp>'
+                + '<br/>'
+                + '<span class="label label-info">书号</span>'
+                + '<samp id="ISBN">' + result[4] + '</samp>'
+                + '<br/>'
+                + '<span class="label label-info">页数</span>'
+                + '<samp id="pages">' + result[8] + '</samp>'
+                + '<br/>'
+                + '<span class="label label-info">在架状态</span>'
+                + '<samp id="status">' + result[7] + '</samp>'
+                + '<br/>'
+                + '<span class="label label-info">书籍简介</span>'
+                + '<samp id="intro">' + result[5].substr(0, 20) + '......</samp>'
+                + '<div align="center" id="returnBookBtn">'
+                + '<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal"'
+                + 'onclick="App.set('+ booksList[i] +')">还书'
+                + '</button>'
+                + '</div>'
+                + '<br/>'
+                + '</div>'
+                + '</div>'
+                + '</div>';
+        }
+        $("#Viewbooks").append(content);
+    },
+
 
     getBooksByKeyword: async function(keyword){
     var publishBooks = await App._getPublishedBooks();
@@ -178,6 +229,7 @@ App = {
      * @returns {Promise<void>}
      */
     getCommentedBooks: async function(){
+        $("#returnBookBtn").hide();
         var result = await App._getCommentedBooks();
         window.booksList = result;
         window.totalBooksNum = result.length;
@@ -204,7 +256,7 @@ App = {
         window.totalBooksNum = result.length;
         console.log(totalBooksNum);
         $("#pagination").pagination(totalBooksNum, {
-            callback: App.pageCallback,
+            callback: App.pageCallReturnback,
             prev_text: '<<<',
             next_text: '>>>',
             ellipse_text: '...',
@@ -232,6 +284,38 @@ App = {
             items_per_page: 8, // 每页显示的条目数
             num_display_entries: 4, // 连续分页主体部分显示的分页条目数
             num_edge_entries: 1 // 两侧显示的首尾分页的条目数
+        });
+    },
+
+
+    set: function (_id) {
+        window.ReturnId = _id;
+    },
+
+    returnBook: function(){
+        book.deployed().then(function (bookInstance) {
+            bookInstance.isBorrowed.call(ReturnId).then(function (result) {
+             if(result){
+                 $("#returnBookBtn").html('归 还');
+                 $("#returnBookBtn").attr("disabled", false);
+                 bookInstance.returnBook(ReturnId,{
+                     from: web3.eth.accounts[0],
+                 }).then(function (result) {
+                     alert("归还成功,等待写入区块!");
+                     $("#modal").modal('hide');
+                     window.location.reload();
+                 }).catch(function (err) {
+                     alert("归还失败: " + err);
+                     $("#modal").modal('hide');
+                     window.location.reload();
+                 });
+             }else{
+                 $("#returnBookBtn").html('已归还');
+                 $("#returnBookBtn").attr("disabled", true);
+                 alert("这本书你已经归还");
+                 $("#modal").modal('hide');
+             }
+            });
         });
     },
 
