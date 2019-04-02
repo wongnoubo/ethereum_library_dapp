@@ -105,10 +105,10 @@ http://localhost:5001/webui
 
 
 打开ganache——>设置——>ACCOUNTS&KEYS<br />
-![ganache-ci.png](https://github.com/wongnoubo/Eshop/blob/master/images/ganache-ci.png)
+![ganache-ci.png](https://github.com/wongnoubo/Elibrary/blob/master/docs/ganache-ci.png)
 
 
-![ganache.png](https://github.com/wongnoubo/Eshop/blob/master/images/ganache.png)
+![ganache.png](https://github.com/wongnoubo/Elibrary/blob/master/docs/ganache.png)
 
 
 
